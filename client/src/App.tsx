@@ -1,4 +1,4 @@
-// Style direction: Galerie Brutaliste Dorée — keep the shell light, editorial, and brand-led so the page can carry the asymmetrical content system.
+// Style direction: Galerie Brutaliste Dorée — shell clair, parcours éditorial et navigation sans impasse.
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -6,9 +6,10 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import ClassDetail from "./pages/ClassDetail";
 
 function Router() {
-  return <Switch><Route path="/" component={Home} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch>;
+  return <Switch><Route path="/" component={Home} /><Route path="/classes/private" component={ClassDetail} /><Route path="/classes/studio" component={ClassDetail} /><Route path="/classes/online" component={ClassDetail} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch>;
 }
 
 export default function App() {

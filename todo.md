@@ -24,3 +24,13 @@
 - [x] Ajouter un lien YouTube officiel derrière la partie vidéo/portfolio.
 - [x] Ajouter le logo joint comme favicon dans le document HTML.
 - [x] Vérifier les liens, le contraste et le rendu responsive.
+
+## Pages des activités
+
+- [x] Définir le contenu professionnel des trois pages de cours.
+- [x] Créer la page cours particuliers à domicile.
+- [x] Créer la page cours en studio.
+- [x] Créer la page masterclass et coaching en ligne.
+- [x] Relier chaque ligne « Choose your entry point » à sa page dédiée.
+- [x] Ajouter des CTA de réservation et des liens de retour cohérents.
+- [x] Vérifier les trois routes sur desktop et mobile.

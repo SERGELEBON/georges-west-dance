@@ -4,7 +4,7 @@ import { ArrowDownRight, ArrowRight, CalendarDays, Check, ChevronDown, Instagram
 import { toast } from "sonner";
 
 const ASSETS = {
-  mark: "/manus-storage/gwd-mark_6cf77a9a.png",
+  mark: "/manus-storage/gwd-mark-final_e1fe841e.png",
   hero: "/manus-storage/gwd-hero-dancers_2b7c01fa.jpg",
   studio: "/manus-storage/gwd-studio-portrait_de5862bb.jpg",
   performance: "/manus-storage/gwd-performance_b1dcb140.jpg",

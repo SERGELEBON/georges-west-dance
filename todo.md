@@ -15,3 +15,12 @@
 - [x] Supprimer les filtres qui déforment ou blanchissent le symbole.
 - [x] Ajuster les cadres, tailles et contrastes sur fonds clair, vidéo et anthracite.
 - [x] Vérifier visuellement tous les emplacements et enregistrer une nouvelle version.
+
+## Logo joint, YouTube et favicon
+
+- [x] Copier et uploader le fichier logo joint comme asset officiel.
+- [x] Remplacer les logos générés par le logo joint dans header, hero, réservation et footer.
+- [x] Présenter le logo avec un encadrement ivoire propre et sans déformation.
+- [x] Ajouter un lien YouTube officiel derrière la partie vidéo/portfolio.
+- [x] Ajouter le logo joint comme favicon dans le document HTML.
+- [x] Vérifier les liens, le contraste et le rendu responsive.

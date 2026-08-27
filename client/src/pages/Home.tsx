@@ -1,6 +1,6 @@
-// Style direction: Galerie Brutaliste Dorée — editorial asymmetry, ivory/charcoal contrast, Ghanaian gold accents, motion lines, and crisp image frames.
-import { useMemo, useState } from "react";
-import { ArrowDownRight, ArrowRight, CalendarDays, Check, ChevronDown, Instagram, Menu, Play, Sparkles, X, Youtube } from "lucide-react";
+// Style direction: Galerie Brutaliste Dorée refondue — hero cinématique plein écran, typographie d’affiche, ivoire/charbon, or ghanéen en gestes précis.
+import { useMemo, useRef, useState } from "react";
+import { ArrowDownRight, ArrowRight, CalendarDays, Check, ChevronDown, Instagram, Menu, Pause, Play, Sparkles, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 const ASSETS = {
@@ -8,6 +8,7 @@ const ASSETS = {
   hero: "/manus-storage/gwd-hero-dancers_2b7c01fa.jpg",
   studio: "/manus-storage/gwd-studio-portrait_de5862bb.jpg",
   performance: "/manus-storage/gwd-performance_b1dcb140.jpg",
+  heroVideo: "/manus-storage/gwd-hero-video_2d7b6989.mp4",
 };
 
 const navItems = ["Classes", "Portfolio", "Booking", "About", "Contact"];
@@ -27,30 +28,39 @@ export default function Home() {
   const [subject, setSubject] = useState<keyof typeof prompts>("portrait");
   const [mood, setMood] = useState("Quiet intensity");
   const [generated, setGenerated] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) videoRef.current.pause();
+      else void videoRef.current.play();
+    }
+    setIsVideoPlaying((playing) => !playing);
+  };
   const currentPrompt = useMemo(() => `${prompts[subject]} Mood: ${mood}.`, [subject, mood]);
-
   const notify = (message: string) => toast(message, { style: { background: "#27313a", color: "#fff", border: "1px solid #d4af37" } });
   const generate = () => { setGenerated(true); notify("Your monochrome composition is ready."); };
 
   return (
     <div className="site-shell">
       <div className="language-strip"><span>GWD / STUDIO NOTES 01</span><span>New sessions open in Accra · <button onClick={() => scrollToId("booking")}>View availability →</button></span><span>English <ChevronDown size={14} /></span></div>
-      <header className="site-header">
-        <a href="#top" className="brand" aria-label="Georges West Dance home"><img src={ASSETS.mark} alt="" /><span>GEORGES WEST<br /><em>DANCE</em></span></a>
-        <nav className={mobileOpen ? "nav-open" : ""}>{navItems.map((item) => <button key={item} onClick={() => { setMobileOpen(false); scrollToId(item.toLowerCase()); }}>{item}</button>)}</nav>
-        <div className="header-actions"><select value={lang} onChange={(e) => setLang(e.target.value)} aria-label="Choose language"><option>EN</option><option>FR</option><option>ES</option><option>DE</option><option>ZH</option></select><button className="dark-button" onClick={() => scrollToId("booking")}>Book a class <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button></div>
-      </header>
-
       <main id="top">
-        <section className="hero-section">
-          <div className="hero-copy"><p className="eyebrow"><span className="gold-dot" /> Contemporary dance / Accra, Ghana</p><h1>Make room<br /><i>for movement.</i></h1><p className="hero-lede">A dance studio for bodies that want to speak clearly. Private coaching, studio sessions and performance-led practice with Georges West.</p><div className="hero-ctas"><button className="gold-button" onClick={() => scrollToId("booking")}>Find your rhythm <ArrowRight size={17} /></button><button className="text-button" onClick={() => scrollToId("portfolio")}><span className="play-icon"><Play size={11} fill="currentColor" /></span> Watch the work</button></div><div className="hero-meta"><span>01 — 04</span><span className="hero-rule" /><span>Stories in motion</span></div></div>
-          <div className="hero-visual"><div className="hero-photo"><img src={ASSETS.hero} alt="Two dancers in a black-and-white partner pose" /><div className="photo-caption"><span>01 / Movement study</span><span>GWD — 2024</span></div></div><div className="vertical-note">GEORGES WEST DANCE <ArrowDownRight size={16} /></div><div className="orbit-line" /></div>
-          <div className="hero-index">A<br />C<br />C<br />R<br />A</div>
+        <section className="hero-section" aria-label="Georges West Dance hero video">
+          <video ref={videoRef} className="hero-video" poster={ASSETS.hero} autoPlay muted loop playsInline aria-label="Abstract black-and-white contemporary dance movement"><source src={ASSETS.heroVideo} type="video/mp4" /></video>
+          <div className="hero-shade" />
+          <header className="site-header">
+            <a href="#top" className="brand" aria-label="Georges West Dance home"><img src={ASSETS.mark} alt="" /><span>GEORGES WEST<br /><em>DANCE</em></span></a>
+            <nav className={mobileOpen ? "nav-open" : ""}>{navItems.map((item) => <button key={item} onClick={() => { setMobileOpen(false); scrollToId(item.toLowerCase()); }}>{item}</button>)}</nav>
+            <div className="header-actions"><select value={lang} onChange={(e) => setLang(e.target.value)} aria-label="Choose language"><option>EN</option><option>FR</option><option>ES</option><option>DE</option><option>ZH</option></select><button className="gold-button header-cta" onClick={() => scrollToId("booking")}>Book a class <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button></div>
+          </header>
+          <div className="hero-content"><p className="eyebrow"><span className="gold-dot" /> Contemporary dance / Accra, Ghana</p><h1>Make room<br /><i>for movement.</i></h1><p className="hero-lede">A dance studio for bodies that want to speak clearly. Private coaching, studio sessions and performance-led practice with Georges West.</p><div className="hero-ctas"><button className="gold-button" onClick={() => scrollToId("booking")}>Find your rhythm <ArrowRight size={17} /></button><button className="text-button light-button" onClick={() => scrollToId("portfolio")}><span className="play-icon"><Play size={11} fill="currentColor" /></span> Watch the work</button></div></div>
+          <div className="hero-emblem"><img src={ASSETS.mark} alt="" /><span>GWD / FILM 01</span></div>
+          <div className="hero-footer"><span>01 / 01</span><span className="hero-progress"><i /></span><button className="video-control" onClick={toggleVideo} aria-label={isVideoPlaying ? "Pause hero video" : "Play hero video"}>{isVideoPlaying ? <><Pause size={13} /> Pause film</> : <><Play size={13} /> Play film</>}</button><span className="hero-location">Accra · 05°33′N 00°12′W</span></div>
         </section>
 
         <section className="intro-section" id="about"><div className="section-number">01</div><div className="intro-statement"><p className="eyebrow">A practice, not a performance</p><h2>Dance is how we<br /><span>take up space.</span></h2></div><div className="intro-body"><p>From the first count to the final bow in Accra, Georges West Dance builds confidence through movement. Our approach pairs disciplined technique with the freedom to find your own language.</p><button className="line-button" onClick={() => notify("About Georges West is coming into focus.")}>Meet Georges <ArrowRight size={15} /></button></div><div className="stat-row"><div><strong>12+</strong><span>Years in motion</span></div><div><strong>03</strong><span>Ways to learn</span></div><div><strong>01</strong><span>Shared language</span></div></div></section>
 
-        <section className="lab-section" id="classes"><div className="lab-heading"><div><p className="eyebrow">The monochrome image lab</p><h2>Put a face<br /><i>to the feeling.</i></h2></div><p>Make a visual study of the person you are becoming. Shape a prompt, choose a mood, and compose a black-and-white portrait rooted in movement.</p></div><div className="lab-grid"><div className="lab-controls"><div className="control-group"><label>01 / Subject</label><div className="choice-list">{([["portrait", "Solo portrait"], ["duo", "Dance partners"], ["movement", "In motion"]] as const).map(([value, label]) => <button className={subject === value ? "choice active" : "choice"} onClick={() => setSubject(value)} key={value}><span>{label}</span>{subject === value && <Check size={15} />}</button>)}</div></div><div className="control-group"><label>02 / Atmosphere</label><select className="wide-select" value={mood} onChange={(e) => setMood(e.target.value)}><option>Quiet intensity</option><option>Sunlit confidence</option><option>After-hours energy</option><option>Soft focus</option></select></div><button className="generate-button" onClick={generate}><Sparkles size={17} /> Generate image <ArrowRight size={17} /></button><p className="tiny-note">A creative concept preview · No account required</p></div><div className="result-frame">{generated ? <><img src={subject === "portrait" ? ASSETS.studio : subject === "duo" ? ASSETS.hero : ASSETS.performance} alt="Generated monochrome dance composition" /><div className="result-overlay"><span>GWD / IMAGE LAB</span><strong>COMPOSITION<br />READY</strong><button onClick={() => navigator.clipboard?.writeText(currentPrompt).then(() => notify("Prompt copied to clipboard."))}>Copy prompt →</button></div></> : <div className="empty-result"><div className="empty-symbol">✳</div><p>Select a subject.<br />We’ll start from there.</p><span>YOUR RESULT WILL APPEAR HERE</span></div>}<div className="frame-corner tl" /><div className="frame-corner br" /></div></div></section>
+        <section className="lab-section" id="classes"><div className="lab-heading"><div><p className="eyebrow">The monochrome image lab</p><h2>Put a face<br /><i>to the feeling.</i></h2></div><p>Make a visual study of the person you are becoming. Shape a prompt, choose a mood, and compose a black-and-white portrait rooted in movement.</p></div><div className="lab-grid"><div className="lab-controls"><div className="control-group"><label>01 / Subject</label><div className="choice-list">{([['portrait', 'Solo portrait'], ['duo', 'Dance partners'], ['movement', 'In motion']] as const).map(([value, label]) => <button className={subject === value ? "choice active" : "choice"} onClick={() => setSubject(value)} key={value}><span>{label}</span>{subject === value && <Check size={15} />}</button>)}</div></div><div className="control-group"><label>02 / Atmosphere</label><select className="wide-select" value={mood} onChange={(e) => setMood(e.target.value)}><option>Quiet intensity</option><option>Sunlit confidence</option><option>After-hours energy</option><option>Soft focus</option></select></div><button className="generate-button" onClick={generate}><Sparkles size={17} /> Generate image <ArrowRight size={17} /></button><p className="tiny-note">A creative concept preview · No account required</p></div><div className="result-frame">{generated ? <><img src={subject === "portrait" ? ASSETS.studio : subject === "duo" ? ASSETS.hero : ASSETS.performance} alt="Generated monochrome dance composition" /><div className="result-overlay"><span>GWD / IMAGE LAB</span><strong>COMPOSITION<br />READY</strong><button onClick={() => navigator.clipboard?.writeText(currentPrompt).then(() => notify("Prompt copied to clipboard."))}>Copy prompt →</button></div></> : <div className="empty-result"><div className="empty-symbol">✳</div><p>Select a subject.<br />We’ll start from there.</p><span>YOUR RESULT WILL APPEAR HERE</span></div>}<div className="frame-corner tl" /><div className="frame-corner br" /></div></div></section>
 
         <section className="program-section"><div className="section-topline"><p className="eyebrow">Choose your entry point</p><button className="line-button" onClick={() => notify("All class formats are available by enquiry.")}>View all classes <ArrowRight size={15} /></button></div><div className="program-list"><article><span className="program-no">01</span><div><h3>Private / at home</h3><p>One-on-one coaching, tailored to your pace and your space.</p></div><ArrowDownRight /></article><article><span className="program-no">02</span><div><h3>Studio / together</h3><p>Structured classes with room to experiment, connect and grow.</p></div><ArrowDownRight /></article><article><span className="program-no">03</span><div><h3>Online / anywhere</h3><p>Live masterclasses that bring the studio into your living room.</p></div><ArrowDownRight /></article></div></section>
 

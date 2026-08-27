@@ -34,3 +34,11 @@
 - [x] Relier chaque ligne « Choose your entry point » à sa page dédiée.
 - [x] Ajouter des CTA de réservation et des liens de retour cohérents.
 - [x] Vérifier les trois routes sur desktop et mobile.
+
+## Réservation fonctionnelle et visuels par activité
+
+- [x] Générer ou préparer un visuel dédié pour domicile, studio et coaching en ligne.
+- [x] Construire un formulaire de contact avec activité préselectionnée.
+- [x] Relier chaque CTA de réservation au formulaire correspondant.
+- [x] Ajouter confirmation, validation et gestion d’erreur côté interface.
+- [x] Vérifier les médias, les routes et le responsive.

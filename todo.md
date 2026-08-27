@@ -42,3 +42,19 @@
 - [x] Relier chaque CTA de réservation au formulaire correspondant.
 - [x] Ajouter confirmation, validation et gestion d’erreur côté interface.
 - [x] Vérifier les médias, les routes et le responsive.
+
+## Skill, envoi serveur, preuve sociale et calendrier
+
+- [x] Initialiser une compétence réutilisable basée sur le workflow Georges West Dance.
+- [x] Lire la documentation full-stack et préparer l’upgrade serveur.
+- [x] Configurer l’envoi serveur des formulaires avec secret d’email documenté.
+- [x] Ajouter un calendrier interactif pour les cours collectifs.
+- [x] Ajouter une section de confiance prête pour des avis clients réels, sans contenu inventé.
+- [x] Valider la compétence et le site, puis enregistrer une nouvelle version.
+
+## Livraison email réelle
+
+- [x] Intégrer un fournisseur email serveur et envoyer les demandes directement vers l’adresse du studio.
+- [x] Documenter les variables RESEND_API_KEY et CONTACT_EMAIL requises.
+- [x] Ajouter un test Vitest couvrant la configuration email et l’appel serveur.
+- [x] Ajouter une documentation persistante décrivant RESEND_API_KEY, CONTACT_EMAIL et la procédure de configuration email.

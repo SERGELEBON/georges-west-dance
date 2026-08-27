@@ -58,3 +58,20 @@
 - [x] Documenter les variables RESEND_API_KEY et CONTACT_EMAIL requises.
 - [x] Ajouter un test Vitest couvrant la configuration email et l’appel serveur.
 - [x] Ajouter une documentation persistante décrivant RESEND_API_KEY, CONTACT_EMAIL et la procédure de configuration email.
+
+## Google Calendar, formulaire et avis
+
+- [x] Reporter la synchronisation Google Calendar après le choix « skip ».
+- [x] Conserver les créneaux indicatifs après le choix « skip ».
+- [x] Ajouter une animation de chargement au formulaire de réservation.
+- [x] Ajouter un message de succès personnalisé après envoi.
+- [x] Reporter le carrousel d’avis après le choix « skip » et l’absence d’avis authentiques.
+- [x] Vérifier les états confirmés, documenter le périmètre reporté et enregistrer un checkpoint.
+
+## Périmètre reporté après « skip »
+
+- [x] Ajouter un état de chargement animé au formulaire.
+- [x] Ajouter un message de succès personnalisé après envoi réussi.
+- [x] Laisser le calendrier Google Calendar en attente d’une source ICS ou d’une connexion dédiée.
+- [x] Laisser le carrousel d’avis en attente d’avis clients authentiques.
+- [x] Enregistrer un checkpoint après l’animation de chargement et le message de succès personnalisé.

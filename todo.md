@@ -75,3 +75,14 @@
 - [x] Laisser le calendrier Google Calendar en attente d’une source ICS ou d’une connexion dédiée.
 - [x] Laisser le carrousel d’avis en attente d’avis clients authentiques.
 - [x] Enregistrer un checkpoint après l’animation de chargement et le message de succès personnalisé.
+
+## Affinage logo et rédaction
+
+- [x] Réduire la taille du logo joint dans le header et le footer.
+- [x] Repositionner la plaque logo du hero sans concurrencer le message principal.
+- [x] Harmoniser le logo sur les pages de cours et la réservation.
+- [x] Relire et réécrire les textes de l’accueil avec une voix professionnelle et cohérente.
+- [x] Relire et réécrire les textes des trois pages de cours.
+- [x] Vérifier le rendu responsive et enregistrer un checkpoint.
+- [x] Réécrire explicitement les textes de ClassDetail.tsx pour Private, Studio et Online.
+- [x] Enregistrer un nouveau checkpoint après les corrections de logo et de rédaction.

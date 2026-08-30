@@ -110,3 +110,23 @@
 - [x] Remplacer le menu mobile par un panneau latéral animé et accessible.
 - [x] Gérer la fermeture du panneau par lien, bouton et clic extérieur.
 - [x] Respecter prefers-reduced-motion et vérifier desktop/mobile.
+
+## Nouvelle erreur Vercel
+
+- [x] Identifier l’erreur exacte dans le rapport Vercel joint.
+- [x] Corriger la configuration ou le code responsable sans casser Manus.
+- [x] Revalider tests, typecheck et build localement.
+- [x] Documenter si le fichier joint ne contient pas le journal complet du déploiement.
+- [x] Enregistrer un checkpoint après correction.
+
+## Vercel affiche le bundle serveur
+
+- [x] Vérifier la sortie frontend générée dans `dist/public` et le fichier d’entrée Vercel.
+- [x] Empêcher Vercel de servir `dist/index.js` comme page publique.
+- [x] Configurer la racine pour servir `dist/public/index.html` et conserver l’API en serverless.
+- [x] Revalider le build et documenter les réglages Vercel requis.
+- [x] Retirer la référence résiduelle à `api/index.ts` dans `vercel.json`.
+- [x] Relancer `pnpm test`, `pnpm check` et `pnpm build` après la correction finale.
+- [x] Enregistrer un nouveau checkpoint après la correction finale Vercel.
+- [x] Documenter clairement que la validation Vercel reste locale sans déploiement distant confirmé.
+- [ ] Enregistrer un checkpoint après la correction finale de `vercel.json` et la validation complète.

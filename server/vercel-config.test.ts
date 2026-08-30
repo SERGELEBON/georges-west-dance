@@ -7,9 +7,19 @@ const config = JSON.parse(
 ) as {
   functions: Record<string, { runtime: string }>;
   rewrites: Array<{ source: string; destination: string }>;
+  outputDirectory: string;
+  buildCommand: string;
 };
 
 describe("Vercel configuration", () => {
+  it("publishes only the React output directory", () => {
+    expect(config.outputDirectory).toBe("public");
+  });
+
+  it("copies the React output into the public deployment directory", () => {
+    expect(config.buildCommand).toContain("cp -R dist/public/. public/");
+  });
+
   it("keeps the Express catch-all function on Node 22", () => {
     expect(config.functions["api/[...path].ts"]?.runtime).toBe("nodejs22.x");
   });

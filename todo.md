@@ -138,4 +138,13 @@
 - [x] Préserver la lisibilité du logo joint sans déformation.
 - [x] Vérifier le rendu desktop/mobile et enregistrer un checkpoint.
 - [x] Faire une capture explicite du footer sur desktop et mobile pour valider le médaillon circulaire.
-- [ ] Enregistrer un nouveau checkpoint après validation visuelle complète du header et du footer.
+- [x] Enregistrer un nouveau checkpoint après validation visuelle complète du header et du footer.
+
+## Bundle serveur encore affiché sur Vercel
+
+- [x] Comparer le fichier servi avec la sortie `dist/public/index.html` et le bundle `dist/index.js`.
+- [x] Corriger la configuration de déploiement pour que la racine serve uniquement le frontend.
+- [x] Vérifier l’entrée serverless et les routes API sans exposer le bundle serveur.
+- [x] Revalider le build et documenter la procédure de redéploiement Vercel.
+- [ ] Enregistrer un checkpoint après correction.
+- [x] Ajouter dans la documentation la procédure de redéploiement Vercel et les contrôles post-déploiement.

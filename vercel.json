@@ -2,8 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist/public",
+  "buildCommand": "pnpm build && rm -rf public && mkdir -p public && cp -R dist/public/. public/",
+  "outputDirectory": "public",
   "functions": {
     "api/[...path].ts": { "runtime": "nodejs22.x" }
   },

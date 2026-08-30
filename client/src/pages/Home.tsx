@@ -1,5 +1,5 @@
 // Style direction: Galerie Brutaliste Dorée refondue — hero cinématique plein écran, typographie d’affiche, ivoire/charbon, or ghanéen en gestes précis.
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowDownRight, ArrowRight, CalendarDays, Check, ChevronDown, Instagram, Menu, Pause, Play, Sparkles, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
@@ -24,6 +24,7 @@ function scrollToId(id: string) {
 
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [lang, setLang] = useState("EN");
   const [subject, setSubject] = useState<keyof typeof prompts>("portrait");
   const [mood, setMood] = useState("Quiet intensity");
@@ -37,6 +38,13 @@ export default function Home() {
     }
     setIsVideoPlaying((playing) => !playing);
   };
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 56);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const currentPrompt = useMemo(() => `${prompts[subject]} Mood: ${mood}.`, [subject, mood]);
   const notify = (message: string) => toast(message, { style: { background: "#27313a", color: "#fff", border: "1px solid #d4af37" } });
   const generate = () => { setGenerated(true); notify("Your monochrome composition is ready."); };
@@ -48,11 +56,18 @@ export default function Home() {
         <section className="hero-section" aria-label="Georges West Dance hero video">
           <video ref={videoRef} className="hero-video" poster={ASSETS.hero} autoPlay muted loop playsInline aria-label="Abstract black-and-white contemporary dance movement"><source src={ASSETS.heroVideo} type="video/mp4" /></video>
           <div className="hero-shade" />
-          <header className="site-header">
+          <header className={`site-header ${isScrolled ? "site-header--compact" : ""}`}>
             <a href="#top" className="brand" aria-label="Georges West Dance home"><img src={ASSETS.mark} alt="Georges West Dance logo" /></a>
-            <nav className={mobileOpen ? "nav-open" : ""}>{navItems.map((item) => <button key={item} onClick={() => { setMobileOpen(false); scrollToId(item.toLowerCase()); }}>{item}</button>)}</nav>
-            <div className="header-actions"><select value={lang} onChange={(e) => setLang(e.target.value)} aria-label="Choose language"><option>EN</option><option>FR</option><option>ES</option><option>DE</option><option>ZH</option></select><button className="gold-button header-cta" onClick={() => scrollToId("booking")}>Book a class <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button></div>
+            <nav className="desktop-nav">{navItems.map((item) => <button key={item} onClick={() => scrollToId(item.toLowerCase())}>{item}</button>)}</nav>
+            <div className="header-actions"><select value={lang} onChange={(e) => setLang(e.target.value)} aria-label="Choose language"><option>EN</option><option>FR</option><option>ES</option><option>DE</option><option>ZH</option></select><button className="gold-button header-cta" onClick={() => scrollToId("booking")}>Book a class <ArrowRight size={15} /></button><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="mobile-navigation" aria-label={mobileOpen ? "Close navigation" : "Open navigation"}>{mobileOpen ? <X /> : <Menu />}</button></div>
           </header>
+          <div className={`mobile-nav-backdrop ${mobileOpen ? "is-open" : ""}`} aria-hidden="true" onClick={() => setMobileOpen(false)} />
+          <aside id="mobile-navigation" className={`mobile-drawer ${mobileOpen ? "is-open" : ""}`} aria-label="Mobile navigation" aria-hidden={!mobileOpen}>
+            <div className="mobile-drawer-top"><span>GWD / NAVIGATION</span><button onClick={() => setMobileOpen(false)} aria-label="Close navigation"><X size={20} /></button></div>
+            <nav>{navItems.map((item, index) => <button key={item} onClick={() => { setMobileOpen(false); scrollToId(item.toLowerCase()); }}><span>0{index + 1}</span>{item}<ArrowRight size={16} /></button>)}</nav>
+            <button className="gold-button mobile-drawer-cta" onClick={() => { setMobileOpen(false); scrollToId("booking"); }}>Book a class <ArrowRight size={15} /></button>
+            <p className="mobile-drawer-note">Accra · Ghana<br />A practice, not a performance.</p>
+          </aside>
           <div className="hero-content"><p className="eyebrow"><span className="gold-dot" /> Contemporary dance / Accra, Ghana</p><h1>Make room<br /><i>for movement.</i></h1><p className="hero-lede">A dance studio for people who want to move with clarity. Private coaching, studio sessions and performance-led practice with Georges West.</p><div className="hero-ctas"><button className="gold-button" onClick={() => scrollToId("booking")}>Find your rhythm <ArrowRight size={17} /></button><button className="text-button light-button" onClick={() => scrollToId("portfolio")}><span className="play-icon"><Play size={11} fill="currentColor" /></span> Watch the work</button></div></div>
           <div className="hero-emblem"><img src={ASSETS.mark} alt="" /><span>GWD / FILM 01</span></div>
           <div className="hero-footer"><span>01 / 01</span><span className="hero-progress"><i /></span><button className="video-control" onClick={toggleVideo} aria-label={isVideoPlaying ? "Pause hero video" : "Play hero video"}>{isVideoPlaying ? <><Pause size={13} /> Pause film</> : <><Play size={13} /> Play film</>}</button><span className="hero-location">Accra · 05°33′N 00°12′W</span></div>

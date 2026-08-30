@@ -102,3 +102,11 @@
 - [x] Faire une capture desktop finale du header fixe avant le checkpoint.
 - [x] Vérifier localement les routes `/api/trpc`, `/api/oauth/callback` et `/manus-storage/*` avec l’application Express.
 - [x] Documenter explicitement que la validation Vercel est locale et qu’aucun déploiement distant n’a été confirmé.
+
+## Interactions du header
+
+- [x] Ajouter la réduction fluide du header au défilement vers le bas.
+- [x] Ajouter les effets de survol du logo et des liens de navigation.
+- [x] Remplacer le menu mobile par un panneau latéral animé et accessible.
+- [x] Gérer la fermeture du panneau par lien, bouton et clic extérieur.
+- [x] Respecter prefers-reduced-motion et vérifier desktop/mobile.

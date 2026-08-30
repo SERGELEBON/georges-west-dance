@@ -86,3 +86,19 @@
 - [x] Vérifier le rendu responsive et enregistrer un checkpoint.
 - [x] Réécrire explicitement les textes de ClassDetail.tsx pour Private, Studio et Online.
 - [x] Enregistrer un nouveau checkpoint après les corrections de logo et de rédaction.
+
+## Header fixe et déploiement Vercel
+
+- [x] Rendre le header fixe au défilement sur la homepage et les pages internes.
+- [x] Intégrer le logo dans le header fixe avec une taille et un contraste professionnels.
+- [x] Diagnostiquer l’erreur de déploiement Vercel fournie en pièce jointe.
+- [x] Adapter le build/configuration uniquement si nécessaire et documenter les limites full-stack.
+- [x] Vérifier le rendu, le build et enregistrer un checkpoint.
+- [x] Corriger les rewrites Vercel pour préserver `/api/trpc` et `/api/oauth/callback`.
+- [x] Revalider explicitement la configuration Vercel sans prétendre à un déploiement réel non exécuté.
+- [x] Effectuer une nouvelle vérification desktop/mobile du header puis créer un checkpoint.
+- [x] Exclure explicitement `/api` du rewrite SPA Vercel et tester la configuration localement.
+- [x] Ajouter un test de contrat pour la configuration Vercel et documenter l’absence de déploiement distant exécuté.
+- [x] Faire une capture desktop finale du header fixe avant le checkpoint.
+- [x] Vérifier localement les routes `/api/trpc`, `/api/oauth/callback` et `/manus-storage/*` avec l’application Express.
+- [x] Documenter explicitement que la validation Vercel est locale et qu’aucun déploiement distant n’a été confirmé.

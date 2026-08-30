@@ -129,4 +129,13 @@
 - [x] Relancer `pnpm test`, `pnpm check` et `pnpm build` après la correction finale.
 - [x] Enregistrer un nouveau checkpoint après la correction finale Vercel.
 - [x] Documenter clairement que la validation Vercel reste locale sans déploiement distant confirmé.
-- [ ] Enregistrer un checkpoint après la correction finale de `vercel.json` et la validation complète.
+- [x] Enregistrer un checkpoint après la correction finale de `vercel.json` et la validation complète.
+
+## Logo circulaire professionnel
+
+- [x] Créer un médaillon circulaire propre pour le logo du header.
+- [x] Créer un médaillon circulaire cohérent pour le footer.
+- [x] Préserver la lisibilité du logo joint sans déformation.
+- [x] Vérifier le rendu desktop/mobile et enregistrer un checkpoint.
+- [x] Faire une capture explicite du footer sur desktop et mobile pour valider le médaillon circulaire.
+- [ ] Enregistrer un nouveau checkpoint après validation visuelle complète du header et du footer.

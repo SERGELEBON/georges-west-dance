@@ -156,4 +156,4 @@
 - [x] Mettre à jour le test de configuration et la documentation Vercel.
 - [x] Relancer tests, typecheck et build.
 - [x] Enregistrer un nouveau checkpoint après correction.
-- [ ] Enregistrer un nouveau checkpoint après la correction du runtime Vercel et la validation complète.
+- [x] Enregistrer un nouveau checkpoint après la correction du runtime Vercel et la validation complète.

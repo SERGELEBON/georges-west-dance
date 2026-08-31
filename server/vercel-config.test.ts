@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 const config = JSON.parse(
   readFileSync(resolve(process.cwd(), "vercel.json"), "utf8"),
 ) as {
-  functions: Record<string, { runtime: string }>;
+  functions?: Record<string, { runtime?: string }>;
   rewrites: Array<{ source: string; destination: string }>;
   outputDirectory: string;
   buildCommand: string;
@@ -20,8 +20,9 @@ describe("Vercel configuration", () => {
     expect(config.buildCommand).toContain("cp -R dist/public/. public/");
   });
 
-  it("keeps the Express catch-all function without a community runtime override", () => {
-    expect(config.functions["api/[...path].ts"]).toEqual({});
+  it("does not declare an invalid community runtime", () => {
+    const runtime = config.functions?.["api/[...path].ts"]?.runtime;
+    expect(runtime).toBeUndefined();
   });
 
   it("excludes API paths from the SPA fallback", () => {

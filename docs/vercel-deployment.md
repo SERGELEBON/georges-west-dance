@@ -26,3 +26,7 @@ La configuration a été vérifiée localement avec le serveur Express : `/api/t
 6. Si l’ancien bundle s’affiche encore, supprimer puis recréer le déploiement Vercel afin de purger l’ancien artefact, puis vérifier que le déploiement utilise bien le dernier commit et non un ancien cache.
 
 La validation effectuée dans le sandbox confirme la structure et le build local ; elle ne constitue pas une confirmation d’un déploiement Vercel distant réussi.
+
+## Version Node et runtime Vercel
+
+La version Node.js est définie dans `package.json` avec `engines.node: "22.x"`. Le bloc `functions` de `vercel.json` ne déclare aucun champ `runtime`, car `nodejs22.x` n’est pas une valeur de runtime communautaire valide pour ce fichier. Si Vercel propose un réglage de version Node dans le tableau de bord, choisir Node 22 pour Preview et Production.

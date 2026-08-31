@@ -146,5 +146,14 @@
 - [x] Corriger la configuration de déploiement pour que la racine serve uniquement le frontend.
 - [x] Vérifier l’entrée serverless et les routes API sans exposer le bundle serveur.
 - [x] Revalider le build et documenter la procédure de redéploiement Vercel.
-- [ ] Enregistrer un checkpoint après correction.
+- [x] Enregistrer un checkpoint après correction.
 - [x] Ajouter dans la documentation la procédure de redéploiement Vercel et les contrôles post-déploiement.
+
+## Correction runtime Vercel
+
+- [x] Retirer `runtime: nodejs22.x` de `vercel.json`.
+- [x] Définir Node 22 via `package.json` avec la clé engines.
+- [x] Mettre à jour le test de configuration et la documentation Vercel.
+- [x] Relancer tests, typecheck et build.
+- [x] Enregistrer un nouveau checkpoint après correction.
+- [ ] Enregistrer un nouveau checkpoint après la correction du runtime Vercel et la validation complète.

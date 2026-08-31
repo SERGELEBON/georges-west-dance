@@ -20,8 +20,8 @@ describe("Vercel configuration", () => {
     expect(config.buildCommand).toContain("cp -R dist/public/. public/");
   });
 
-  it("keeps the Express catch-all function on Node 22", () => {
-    expect(config.functions["api/[...path].ts"]?.runtime).toBe("nodejs22.x");
+  it("keeps the Express catch-all function without a community runtime override", () => {
+    expect(config.functions["api/[...path].ts"]).toEqual({});
   });
 
   it("excludes API paths from the SPA fallback", () => {

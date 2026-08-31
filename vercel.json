@@ -4,9 +4,6 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm build && rm -rf public && mkdir -p public && cp -R dist/public/. public/",
   "outputDirectory": "public",
-  "functions": {
-    "api/[...path].ts": {}
-  },
   "rewrites": [
     { "source": "/((?!api(?:/|$)).*)", "destination": "/index.html" }
   ]

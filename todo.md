@@ -157,3 +157,15 @@
 - [x] Relancer tests, typecheck et build.
 - [x] Enregistrer un nouveau checkpoint après correction.
 - [x] Enregistrer un nouveau checkpoint après la correction du runtime Vercel et la validation complète.
+
+## WhatsApp, réservation modale et section témoignages
+
+- [ ] Ajouter un bouton WhatsApp flottant lié au numéro +233 54 403 6021.
+- [ ] Réduire et simplifier le footer en conservant uniquement les informations essentielles.
+- [ ] Transformer « Book a class » et les CTA de réservation en ouverture de pop-up.
+- [ ] Préremplir le formulaire modale avec l’activité choisie et envoyer la demande côté serveur vers plusdesavoirs01@gmail.com.
+- [ ] Ajouter les états de chargement, succès et erreur dans la réservation modale.
+- [ ] Préparer une section témoignages en carrousel horizontal gauche-droite sans inventer d’avis clients.
+- [ ] Générer des visuels éditoriaux de danse non présentés comme des photos de témoins réels.
+- [ ] Vérifier le rendu responsive, l’accessibilité clavier et les tests Vitest.
+- [ ] Enregistrer un checkpoint après validation complète.

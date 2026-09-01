@@ -9,7 +9,7 @@ The public booking forms use the `contact.submit` tRPC mutation in `server/route
 | `RESEND_API_KEY` | Server-only Resend API credential used to call `POST https://api.resend.com/emails`. | A valid Resend API key, never exposed to the client. |
 | `CONTACT_EMAIL` | Destination inbox for booking enquiries. | A complete address such as `name@domain.com`. |
 
-Configure both variables through the project’s Secrets settings or the managed secret workflow. Do not commit them to `.env`, source files, or client code. The current project recipient is `plusdesavoir01@gmail.com`.
+Configure both variables through the project’s Secrets settings or the managed secret workflow. Do not commit them to `.env`, source files, or client code. The active configured recipient remains `plusdesavoir01@gmail.com`. The requested change to `plusdesavoirs01@gmail.com` is intentionally deferred because the secret update was not accepted; apply it later in the project Secrets panel for both Preview and Production.
 
 ## Sender verification
 

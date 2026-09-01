@@ -25,11 +25,19 @@ describe("Vercel configuration", () => {
     expect(runtime).toBeUndefined();
   });
 
-  it("excludes API paths from the SPA fallback", () => {
+  it("routes storage assets to the serverless proxy before the SPA fallback", () => {
+    const storageRewrite = config.rewrites.find(
+      rewrite => rewrite.source.startsWith("/manus-storage/"),
+    );
+    expect(storageRewrite?.destination).toBe("/api/manus-storage/:path*");
+  });
+
+  it("excludes API and storage paths from the SPA fallback", () => {
     const fallback = config.rewrites.find(
       rewrite => rewrite.destination === "/index.html",
     );
     expect(fallback?.source).toContain("api");
+    expect(fallback?.source).toContain("manus-storage");
     expect(fallback?.source).toContain("?!");
   });
 });

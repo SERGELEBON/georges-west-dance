@@ -160,12 +160,34 @@
 
 ## WhatsApp, réservation modale et section témoignages
 
-- [ ] Ajouter un bouton WhatsApp flottant lié au numéro +233 54 403 6021.
-- [ ] Réduire et simplifier le footer en conservant uniquement les informations essentielles.
-- [ ] Transformer « Book a class » et les CTA de réservation en ouverture de pop-up.
-- [ ] Préremplir le formulaire modale avec l’activité choisie et envoyer la demande côté serveur vers plusdesavoirs01@gmail.com.
-- [ ] Ajouter les états de chargement, succès et erreur dans la réservation modale.
-- [ ] Préparer une section témoignages en carrousel horizontal gauche-droite sans inventer d’avis clients.
-- [ ] Générer des visuels éditoriaux de danse non présentés comme des photos de témoins réels.
-- [ ] Vérifier le rendu responsive, l’accessibilité clavier et les tests Vitest.
-- [ ] Enregistrer un checkpoint après validation complète.
+- [x] Ajouter un bouton WhatsApp flottant lié au numéro +233 54 403 6021.
+- [x] Réduire et simplifier le footer en conservant uniquement les informations essentielles.
+- [x] Transformer « Book a class » et les CTA de réservation en ouverture de pop-up.
+- [x] Préremplir le formulaire modale avec l’activité choisie et envoyer la demande côté serveur vers CONTACT_EMAIL ; le changement vers plusdesavoirs01@gmail.com est reporté.
+- [x] Ajouter les états de chargement, succès et erreur dans la réservation modale.
+- [x] Préparer une section témoignages en carrousel horizontal gauche-droite sans inventer d’avis clients.
+- [x] Générer des visuels éditoriaux de danse non présentés comme des photos de témoins réels.
+- [x] Vérifier le rendu responsive, l’accessibilité clavier et les tests Vitest.
+- [x] Enregistrer un checkpoint après validation complète.
+
+## Synchronisation GitHub et images Vercel
+
+- [x] Auditer les références d’images après la synchronisation GitHub.
+- [x] Corriger les références d’assets afin qu’elles utilisent des URLs persistantes compatibles avec Vercel.
+- [x] Vérifier que les images générées et les visuels existants répondent correctement après build de production.
+- [x] Revalider le déploiement statique local avec la sortie public/index.html.
+
+## Vérifications finales supplémentaires
+
+- [x] Vérifier au clavier l’ouverture et la fermeture de la réservation modale, les contrôles du carrousel, les CTA et le lien WhatsApp.
+- [x] Tester après build le logo, la vidéo hero, les trois images de cours et les trois visuels éditoriaux via les routes de stockage locales.
+- [x] Effectuer un parcours clavier e2e réel de la modale, du carrousel, des CTA et du lien WhatsApp, puis documenter le résultat.
+
+## Couverture e2e complémentaire
+
+- [x] Étendre le parcours e2e clavier à tous les CTA de réservation principaux de la homepage et d’une page de cours.
+- [x] Valider au clavier le contrôle précédent du carrousel témoignages et documenter le résultat.
+
+## Report confirmé
+
+- [x] Reporter le changement de CONTACT_EMAIL vers plusdesavoirs01@gmail.com ; conserver l’adresse serveur actuelle jusqu’à une prochaine validation du secret.

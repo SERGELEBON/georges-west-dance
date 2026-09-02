@@ -6,14 +6,14 @@ import { BookingDialog } from "@/components/BookingDialog";
 import { WHATSAPP_URL } from "@shared/contact";
 
 const ASSETS = {
-  mark: "/manus-storage/gwd-official-logo_20959e49.jpg",
-  hero: "/manus-storage/gwd-hero-dancers_2b7c01fa.jpg",
-  studio: "/manus-storage/gwd-studio-portrait_de5862bb.jpg",
-  performance: "/manus-storage/gwd-performance_b1dcb140.jpg",
-  heroVideo: "/manus-storage/gwd-hero-video_2d7b6989.mp4",
-  storyOne: "/manus-storage/gwd-testimonial-motion-01_1961e85c.jpg",
-  storyTwo: "/manus-storage/gwd-testimonial-motion-02_d0662300.jpg",
-  storyThree: "/manus-storage/gwd-testimonial-motion-03_f0182dca.jpg",
+  mark: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/dKCZczrKpxxCKHmx.jpg",
+  hero: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/NQtYZFgGgHYRjyXB.jpg",
+  studio: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/TOGzPmbRfJrFgJHK.jpg",
+  performance: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/aRfxREyYmFddmovj.jpg",
+  heroVideo: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/KiffohzpQOodozcD.mp4",
+  storyOne: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/kATOYSuDIxeTDKQW.jpg",
+  storyTwo: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/eErYVxwXjCKwWkHs.jpg",
+  storyThree: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/jckbMrnPJKdzOFZk.jpg",
 };
 
 const navItems = ["Classes", "Portfolio", "Booking", "About", "Contact"];

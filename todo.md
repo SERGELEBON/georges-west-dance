@@ -198,4 +198,13 @@
 - [x] Revalider les routes des assets et le routage Vercel du proxy de stockage.
 - [x] Refaire les captures responsive desktop et mobile.
 - [x] Documenter la procédure de redéploiement et les contrôles post-déploiement Vercel.
-- [ ] Enregistrer le checkpoint dédié après validation complète.
+- [x] Enregistrer le checkpoint dédié après validation complète.
+
+## Analyse du déploiement Vercel public
+
+- [x] Inspecter georges-west-dance.vercel.app et les réponses des routes d’images.
+- [x] Comparer les chemins d’assets publics avec la configuration Vercel et le proxy local.
+- [x] Corriger la cause identifiée et ajouter un test de non-régression.
+- [x] Revalider le build, les assets et créer un checkpoint de correction.
+
+- [ ] Enregistrer un nouveau checkpoint après la correction des URLs CDN absolues et la validation locale du build/assets Vercel.

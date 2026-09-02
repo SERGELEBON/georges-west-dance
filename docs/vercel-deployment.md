@@ -45,3 +45,11 @@ Le test Resend peut afficher un avertissement de disponibilité réseau locale ;
 10. Si l’ancien bundle s’affiche encore, vérifier que le déploiement utilise le dernier commit, puis recréer le déploiement pour purger l’ancien artefact ou cache. Aucun déploiement distant n’a été exécuté depuis le sandbox ; cette dernière étape doit être faite dans Vercel.
 
 La validation locale confirme la structure, le routage, les assets et le build. Elle ne constitue pas une confirmation d’un déploiement Vercel distant réussi.
+
+## Incident public du 2 septembre 2026 : images absentes
+
+L’analyse de `https://georges-west-dance.vercel.app/` a confirmé que la page React était servie, mais que toutes les URLs relatives `/manus-storage/...` retournaient HTTP 404 `NOT_FOUND`. Les routes `/api/trpc/system.health` et `/api/oauth/callback` retournaient également HTTP 404 Vercel, preuve que la fonction serverless catch-all n’était pas présente dans le déploiement public actuellement observé.
+
+Pour rendre les médias indépendants de cette fonction absente, les références frontend ont été remplacées par des URLs CDN absolues publiques `files.manuscdn.com`. Les 11 assets ont été contrôlés directement et retournent HTTP 200 avec le bon type MIME : dix images JPEG et une vidéo MP4. Le test `server/public-assets.test.ts` empêche le retour des chemins relatifs `/manus-storage` dans `Home.tsx`, `ClassDetail.tsx` et `client/index.html`.
+
+Cette correction est présente dans le projet local et doit être redéployée dans Vercel. Tant que le dernier checkpoint n’est pas publié, le domaine `georges-west-dance.vercel.app` continuera d’afficher l’ancienne version et ses 404. Après redéploiement, recharger la page sans cache et vérifier que le hero, le logo, les pages de cours et les témoignages affichent leurs visuels. Les routes `/api` doivent également être recontrôlées séparément : elles nécessitent que Vercel prenne bien en compte `api/[...path].ts` et le répertoire racine correct.

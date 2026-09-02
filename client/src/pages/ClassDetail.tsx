@@ -7,10 +7,10 @@ import { BookingDialog } from "@/components/BookingDialog";
 import { WHATSAPP_URL } from "@shared/contact";
 
 const ASSETS = {
-  mark: "/manus-storage/gwd-official-logo_20959e49.jpg",
-  private: "/manus-storage/gwd-private-session_7005ecd4.jpg",
-  studio: "/manus-storage/gwd-studio-session_5f59928c.jpg",
-  online: "/manus-storage/gwd-online-session_9ae8bc50.jpg",
+  mark: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/dKCZczrKpxxCKHmx.jpg",
+  private: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/yuJhiqyyDhDdUIpB.jpg",
+  studio: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/MjZOAIjMPGAISHoW.jpg",
+  online: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/hCYEZDdZpGXIyELO.jpg",
 };
 
 const courseData = {

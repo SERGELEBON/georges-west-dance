@@ -191,3 +191,11 @@
 ## Report confirmé
 
 - [x] Reporter le changement de CONTACT_EMAIL vers plusdesavoirs01@gmail.com ; conserver l’adresse serveur actuelle jusqu’à une prochaine validation du secret.
+
+## Validation finale et redéploiement Vercel
+
+- [x] Revalider le build de production et la sortie public/index.html.
+- [x] Revalider les routes des assets et le routage Vercel du proxy de stockage.
+- [x] Refaire les captures responsive desktop et mobile.
+- [x] Documenter la procédure de redéploiement et les contrôles post-déploiement Vercel.
+- [ ] Enregistrer le checkpoint dédié après validation complète.

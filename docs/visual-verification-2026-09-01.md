@@ -17,3 +17,7 @@ A real Chromium keyboard pass succeeded on the homepage. Tab reached the header 
 ## Extended keyboard e2e
 
 The Chromium runner also verified the homepage header, hero, and booking-section CTAs; the Studio page header, hero, and format CTAs; and both next and previous testimonial rail controls. Each booking trigger opened the accessible dialog and Escape closed it. Space moved the rail in both directions, and the WhatsApp link received focus with the expected Ghana destination.
+
+## Final release screenshots
+
+The final desktop and mobile full-page captures confirm that the homepage and Studio page retain the intended editorial hierarchy, the testimonial rail remains before the footer, the footer stays compact, and the floating WhatsApp action remains visible without obscuring primary content. The Studio calendar, booking area, and internal-page footer remain legible at the mobile viewport.

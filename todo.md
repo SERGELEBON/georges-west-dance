@@ -223,4 +223,16 @@
 - [x] Ajouter dans la carte événement les champs explicites « Format » et « Contact ».
 - [x] Ajouter une interaction accessible pour voir l’affiche en grand avec fermeture clavier.
 - [x] Revalider desktop/mobile et le clavier pour l’interaction d’affiche.
-- [ ] Enregistrer un nouveau checkpoint après la section Upcoming Events, la lightbox, les tests, le build et les validations responsive/clavier.
+- [x] Enregistrer un nouveau checkpoint après la section Upcoming Events, la lightbox, les tests, le build et les validations responsive/clavier.
+
+## Révision composition événements
+
+- [x] Afficher l’affiche événementielle entière dans la carte sans recadrage ni contenu masqué.
+- [x] Repositionner Upcoming Events dans le parcours éditorial autour de A practice, not a performance et Why people stay in motion.
+- [x] Rééquilibrer les titres, espacements et contrastes pour une hiérarchie professionnelle.
+- [x] Vérifier desktop/mobile, lightbox et accessibilité après la réorganisation.
+- [x] Enregistrer un checkpoint après validation de la nouvelle composition.
+
+- [x] Ajuster explicitement les titres, marges, espacements et contrastes de la section événements après son repositionnement.
+- [x] Documenter les ajustements visuels précis et revalider les captures desktop/mobile.
+- [ ] Enregistrer un nouveau checkpoint après la révision finale de composition des événements et la validation desktop/mobile.

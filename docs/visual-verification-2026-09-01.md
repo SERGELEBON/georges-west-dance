@@ -33,3 +33,11 @@ The event card now shows explicit Class, Social, Where, Format and Contact facts
 ## Event interaction keyboard verification
 
 The extended Chromium journey now focuses the event poster button, opens the full-size poster with Enter, confirms the dialog image is visible, and closes it with Escape. The same run continues to validate booking CTAs, the booking modal, both testimonial rail controls, and WhatsApp.
+
+## Composition revision verification
+
+The Upcoming Events section now sits immediately after the studio proof section, so the sequence reads as a deliberate progression from “A practice, not a performance” to “Why people stay in motion” and then to a concrete community event. The supplied poster is fully visible within its card using contain behavior rather than cover cropping. Desktop and mobile captures confirm the event information remains legible and the image lab follows naturally after the event block.
+
+## Final event composition pass
+
+The event block now uses a dedicated warm-paper background, increased top and bottom breathing room, a stronger two-column editorial ratio, a constrained reading width, and a charcoal event panel with gold status marker and high-contrast facts. On mobile, the layout stacks cleanly with compact spacing and full-width actions. The poster remains fully visible with `object-fit: contain`, while the lightbox preserves full-size viewing.

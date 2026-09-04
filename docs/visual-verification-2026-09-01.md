@@ -21,3 +21,15 @@ The Chromium runner also verified the homepage header, hero, and booking-section
 ## Final release screenshots
 
 The final desktop and mobile full-page captures confirm that the homepage and Studio page retain the intended editorial hierarchy, the testimonial rail remains before the footer, the footer stays compact, and the floating WhatsApp action remains visible without obscuring primary content. The Studio calendar, booking area, and internal-page footer remain legible at the mobile viewport.
+
+## Upcoming events verification
+
+The supplied Bachata & Salsa Night poster is displayed before the footer in the new Upcoming Events section. Desktop shows the poster beside a structured event brief; mobile stacks the poster, schedule, venue and WhatsApp actions without horizontal overflow. The section preserves the ivory/charcoal/gold visual system and remains readable at 390px width.
+
+## Event detail and poster lightbox verification
+
+The event card now shows explicit Class, Social, Where, Format and Contact facts. The supplied poster is rendered in the editorial card and is an accessible button that opens a full-size lightbox; Escape, the close button and backdrop click close it. Desktop and mobile full-page captures confirm the poster/details split on desktop and the stacked layout at 390px without horizontal overflow.
+
+## Event interaction keyboard verification
+
+The extended Chromium journey now focuses the event poster button, opens the full-size poster with Enter, confirms the dialog image is visible, and closes it with Escape. The same run continues to validate booking CTAs, the booking modal, both testimonial rail controls, and WhatsApp.

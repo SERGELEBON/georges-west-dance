@@ -30,6 +30,16 @@ try {
   await openAndCloseBooking(".hero-ctas .gold-button", "Homepage hero CTA");
   await openAndCloseBooking(".booking-copy .dark-button", "Homepage booking CTA");
 
+  const posterTrigger = page.locator(".event-poster-trigger");
+  await posterTrigger.focus();
+  assert(await posterTrigger.evaluate(element => element === document.activeElement), "Event poster could not receive focus");
+  await page.keyboard.press("Enter");
+  const posterDialog = page.locator(".event-lightbox");
+  await posterDialog.waitFor({ state: "visible" });
+  assert(await posterDialog.locator("img").isVisible(), "Event poster lightbox did not open");
+  await page.keyboard.press("Escape");
+  await posterDialog.waitFor({ state: "hidden" });
+
   const rail = page.locator(".testimonial-rail");
   const nextControl = page.locator('.testimonial-controls button[aria-label="Next testimonial story slot"]');
   const previousControl = page.locator('.testimonial-controls button[aria-label="Previous testimonial story slot"]');
@@ -60,7 +70,7 @@ try {
   await openAndCloseBooking(".detail-hero-copy .gold-button", "Studio hero CTA");
   await openAndCloseBooking(".detail-cta .dark-button", "Studio format CTA");
 
-  console.log("Keyboard e2e verification passed: all primary booking CTAs, booking modal, testimonial rail controls, and WhatsApp link.");
+  console.log("Keyboard e2e verification passed: booking CTAs, booking modal, event poster lightbox, testimonial rail controls, and WhatsApp link.");
 } finally {
   await browser.close();
 }

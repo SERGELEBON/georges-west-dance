@@ -14,6 +14,7 @@ const ASSETS = {
   storyOne: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/kATOYSuDIxeTDKQW.jpg",
   storyTwo: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/eErYVxwXjCKwWkHs.jpg",
   storyThree: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/jckbMrnPJKdzOFZk.jpg",
+  eventPoster: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663032235701/qBQRfjkRThHSnihN.jpeg",
 };
 
 const navItems = ["Classes", "Portfolio", "Booking", "About", "Contact"];
@@ -74,6 +75,7 @@ export default function Home() {
   const [mood, setMood] = useState("Quiet intensity");
   const [generated, setGenerated] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [posterOpen, setPosterOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const toggleVideo = () => {
@@ -90,6 +92,15 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!posterOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPosterOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [posterOpen]);
 
   const currentPrompt = useMemo(() => `${prompts[subject]} Mood: ${mood}.`, [subject, mood]);
   const notify = (message: string) => toast(message, { style: { background: "#27313a", color: "#fff", border: "1px solid #d4af37" } });
@@ -135,6 +146,8 @@ export default function Home() {
         <section className="contact-section" id="contact"><div><p className="eyebrow">Stay in the rhythm</p><h2>Notes from<br /><i>the studio.</i></h2></div><form onSubmit={(e) => { e.preventDefault(); notify("You’re on the list."); }}><label htmlFor="email">Receive occasional studio news, new session dates and work in progress.</label><div className="email-row"><input id="email" type="email" placeholder="Your email address" required /><button aria-label="Subscribe"><ArrowRight /></button></div></form></section>
 
         <section className="testimonials-section" id="voices"><div className="testimonials-heading"><div><p className="eyebrow">04 / Stories in motion</p><h2>Real voices<br /><i>belong here.</i></h2></div><p>Scroll through the editorial story slots below. Once dancers share their verified words and photos with permission, each slot can become a true testimony.</p></div><TestimonialRail /></section>
+
+        <section className="events-section" id="events" aria-labelledby="events-title"><div className="events-heading"><p className="eyebrow">05 / Upcoming events</p><h2 id="events-title">Meet us<br /><i>in the room.</i></h2><p>Keep your practice social. Discover the next dance nights, open classes and community moments around Accra.</p></div><article className="event-feature"><div className="event-poster"><button type="button" className="event-poster-trigger" onClick={() => setPosterOpen(true)} aria-label="View the Bachata and Salsa Night poster full size"><img src={ASSETS.eventPoster} alt="Bachata and Salsa Night poster at Afrikiko" /><span className="image-tag">View poster / 01</span></button></div><div className="event-details"><div className="event-kicker"><span className="event-status">Next up</span><span>Every Sunday</span></div><h3>Bachata &amp; Salsa<br /><i>Night.</i></h3><p className="event-intro">A free Bachata class to start the evening, followed by social dancing, good music and a welcoming room at Afrikiko.</p><dl className="event-facts"><div><dt>Class</dt><dd>7:00 PM — 8:00 PM<br /><span>Free Bachata class</span></dd></div><div><dt>Social</dt><dd>8:00 PM — late<br /><span>With Mavé</span></dd></div><div><dt>Where</dt><dd>Afrikiko<br /><span>Eat · Drink · Dance · Vibe</span></dd></div><div><dt>Format</dt><dd>Open class + social night<br /><span>Community dance event</span></dd></div><div><dt>Contact</dt><dd>Georges West Dance<br /><span>+233 54 403 6021</span></dd></div></dl><div className="event-actions"><a className="gold-button" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Ask about this event <MessageCircle size={16} /></a><a className="line-button" href={WHATSAPP_URL} target="_blank" rel="noreferrer">WhatsApp the studio <ArrowRight size={15} /></a></div><p className="event-note">Starting this Sunday · Accra, Ghana · Details may change, so message the studio before travelling.</p></div></article><div className={`event-lightbox ${posterOpen ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Bachata and Salsa Night poster" aria-hidden={!posterOpen} onClick={() => setPosterOpen(false)}><div className="event-lightbox-inner" onClick={(event) => event.stopPropagation()}><button type="button" className="event-lightbox-close" onClick={() => setPosterOpen(false)} aria-label="Close event poster"><X size={20} /></button><img src={ASSETS.eventPoster} alt="Bachata and Salsa Night poster at Afrikiko, full size" /></div></div></section>
       </main>
       <footer><div className="footer-top"><div className="footer-brand"><img src={ASSETS.mark} alt="Georges West Dance logo" /><p>Contemporary dance / Accra, Ghana.</p></div><div className="footer-links footer-links--compact"><div><span className="footer-label">Explore</span><button onClick={() => scrollToId("classes")}>Classes</button><button onClick={() => scrollToId("portfolio")}>Portfolio</button><button onClick={() => scrollToId("booking")}>Booking</button></div><div><span className="footer-label">Connect</span><a href={WHATSAPP_URL} target="_blank" rel="noreferrer"><MessageCircle size={14} /> WhatsApp</a><a href="https://www.youtube.com/results?search_query=Georges+West+Dance" target="_blank" rel="noreferrer"><Youtube size={14} /> YouTube</a><a href="#contact"><Instagram size={14} /> Instagram</a></div></div></div><div className="footer-bottom"><span>© 2024 Georges West Dance</span><span>Accra · Ghana</span><span>EN · FR · ES · DE · ZH</span></div></footer>
     </div>

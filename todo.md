@@ -207,4 +207,20 @@
 - [x] Corriger la cause identifiée et ajouter un test de non-régression.
 - [x] Revalider le build, les assets et créer un checkpoint de correction.
 
-- [ ] Enregistrer un nouveau checkpoint après la correction des URLs CDN absolues et la validation locale du build/assets Vercel.
+- [x] Enregistrer un nouveau checkpoint après la correction des URLs CDN absolues et la validation locale du build/assets Vercel.
+
+## Événements à venir
+
+- [x] Copier et publier l’affiche Bachata & Salsa fournie dans le stockage public du projet.
+- [x] Ajouter une section professionnelle « Upcoming Events » avant le footer de la homepage.
+- [x] Afficher l’événement avec titre, rythme, horaires, lieu, format, contact et action WhatsApp.
+- [x] Ajouter une interaction d’affichage lisible de l’affiche et un CTA responsive.
+- [x] Ajouter les tests de contrat et vérifier le rendu desktop/mobile.
+- [x] Enregistrer un checkpoint après validation complète de la section événements.
+
+## Complément événementiel
+
+- [x] Ajouter dans la carte événement les champs explicites « Format » et « Contact ».
+- [x] Ajouter une interaction accessible pour voir l’affiche en grand avec fermeture clavier.
+- [x] Revalider desktop/mobile et le clavier pour l’interaction d’affiche.
+- [ ] Enregistrer un nouveau checkpoint après la section Upcoming Events, la lightbox, les tests, le build et les validations responsive/clavier.

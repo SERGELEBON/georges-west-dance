@@ -235,4 +235,11 @@
 
 - [x] Ajuster explicitement les titres, marges, espacements et contrastes de la section événements après son repositionnement.
 - [x] Documenter les ajustements visuels précis et revalider les captures desktop/mobile.
-- [ ] Enregistrer un nouveau checkpoint après la révision finale de composition des événements et la validation desktop/mobile.
+- [x] Enregistrer un nouveau checkpoint après la révision finale de composition des événements et la validation desktop/mobile.
+
+## Correction header et hero
+
+- [x] Auditer le chevauchement du header fixe avec le contenu du hero.
+- [x] Corriger uniquement l’espace supérieur du hero sans supprimer ni modifier les contenus existants.
+- [x] Vérifier le rendu desktop/mobile et le focus des CTA du hero.
+- [ ] Enregistrer un checkpoint après validation de la correction.

@@ -41,3 +41,7 @@ The Upcoming Events section now sits immediately after the studio proof section,
 ## Final event composition pass
 
 The event block now uses a dedicated warm-paper background, increased top and bottom breathing room, a stronger two-column editorial ratio, a constrained reading width, and a charcoal event panel with gold status marker and high-contrast facts. On mobile, the layout stacks cleanly with compact spacing and full-width actions. The poster remains fully visible with `object-fit: contain`, while the lightbox preserves full-size viewing.
+
+## Fixed header / hero verification
+
+The fixed 32px language strip plus 86px desktop header is now compensated by a 118px hero top offset; mobile uses a 106px offset for the 32px strip plus 74px header. Desktop and mobile viewport captures show the hero image, eyebrow, headline, copy, CTA row, emblem and lower controls without the header covering the top of the hero. No existing hero content was removed or rewritten.

@@ -242,4 +242,4 @@
 - [x] Auditer le chevauchement du header fixe avec le contenu du hero.
 - [x] Corriger uniquement l’espace supérieur du hero sans supprimer ni modifier les contenus existants.
 - [x] Vérifier le rendu desktop/mobile et le focus des CTA du hero.
-- [ ] Enregistrer un checkpoint après validation de la correction.
+- [x] Enregistrer un checkpoint après validation de la correction.

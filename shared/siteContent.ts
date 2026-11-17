@@ -139,6 +139,7 @@ export const siteContentSchema = z.object({
     titleLine1: line(60),
     titleLine2: line(60),
     intro: text(400),
+    autoplaySeconds: z.number().int().min(0).max(30).default(7),
     items: z.array(eventSchema).max(12),
   }),
   programs: z.object({
@@ -277,6 +278,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     titleLine1: "Meet us",
     titleLine2: "in the room.",
     intro: "Keep your practice social. Discover the next dance nights, open classes and community moments around Accra.",
+    autoplaySeconds: 7,
     items: [
       {
         id: "bachata-salsa-night",

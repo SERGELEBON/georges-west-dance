@@ -1,7 +1,10 @@
-import { describe, expect, it, beforeAll } from "vitest";
+import { describe, expect, it, beforeAll, afterAll } from "vitest";
 import type { Request } from "express";
 import { DEFAULT_CONTENT, siteContentSchema } from "../shared/siteContent";
-import { passwordMatches, adminConfigured } from "./adminAuth";
+import { adminConfigured } from "./adminAuth";
+import { __resetCredentialCache, DEFAULT_ADMIN_EMAIL, getActiveCredentials, saveCredentials, verifyLogin } from "./adminCredentials";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import { createRateLimiter, isSameOriginAdminRequest } from "./security";
 
 const clone = () => JSON.parse(JSON.stringify(DEFAULT_CONTENT));
@@ -32,16 +35,46 @@ describe("content validation blocks injection", () => {
   });
 });
 
-describe("admin auth", () => {
-  beforeAll(() => {
+describe("admin auth (email + password)", () => {
+  const credFile = path.resolve(process.cwd(), ".data", "admin-credentials.json");
+  beforeAll(async () => {
+    delete process.env.BLOB_READ_WRITE_TOKEN;
+    delete process.env.ADMIN_EMAIL;
     process.env.ADMIN_PASSWORD = "correct horse battery";
     process.env.ADMIN_SESSION_SECRET = "x".repeat(40);
+    await fs.rm(credFile, { force: true });
+    __resetCredentialCache();
   });
-  it("checks the password", () => {
-    expect(adminConfigured()).toBe(true);
-    expect(passwordMatches("correct horse battery")).toBe(true);
-    expect(passwordMatches("correct horse batter")).toBe(false);
-    expect(passwordMatches("")).toBe(false);
+  afterAll(async () => { await fs.rm(credFile, { force: true }); __resetCredentialCache(); });
+
+  it("signs in with the default email + env password", async () => {
+    expect(await adminConfigured()).toBe(true);
+    expect(await verifyLogin(DEFAULT_ADMIN_EMAIL, "correct horse battery")).not.toBeNull();
+    expect(await verifyLogin(" GuehiPoegnanSergeJ@gmail.com ", "correct horse battery")).not.toBeNull();
+    expect(await verifyLogin(DEFAULT_ADMIN_EMAIL, "correct horse batter")).toBeNull();
+    expect(await verifyLogin("someone@else.com", "correct horse battery")).toBeNull();
+    expect(await verifyLogin(DEFAULT_ADMIN_EMAIL, "")).toBeNull();
+  });
+
+  it("dashboard change replaces env credentials, stored encrypted", async () => {
+    const before = (await getActiveCredentials())!.version;
+    await saveCredentials("new.admin@example.com", "another long pass 42");
+    const raw = await fs.readFile(credFile, "utf8");
+    expect(raw).not.toContain("new.admin@example.com");
+    __resetCredentialCache();
+    const after = await getActiveCredentials();
+    expect(after?.source).toBe("dashboard");
+    expect(after?.version).not.toBe(before); // old sessions are invalidated
+    expect(await verifyLogin("new.admin@example.com", "another long pass 42")).not.toBeNull();
+    expect(await verifyLogin(DEFAULT_ADMIN_EMAIL, "correct horse battery")).toBeNull();
+  });
+
+  it("falls back to env if the secret changes (file cannot be decrypted)", async () => {
+    process.env.ADMIN_SESSION_SECRET = "y".repeat(40);
+    __resetCredentialCache();
+    expect((await getActiveCredentials())?.source).toBe("env");
+    process.env.ADMIN_SESSION_SECRET = "x".repeat(40);
+    __resetCredentialCache();
   });
 });
 

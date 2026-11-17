@@ -5,9 +5,17 @@ URL: `https://<site>/admin` (not indexed by Google).
 ## One-time Vercel setup
 1. **Storage → Create → Blob → Connect to project** (adds `BLOB_READ_WRITE_TOKEN` automatically).
 2. **Settings → Environment Variables** (Production + Preview):
-   - `ADMIN_PASSWORD`: 12+ characters (a long passphrase).
+   - `ADMIN_PASSWORD`: 12+ characters (a long passphrase) — first password.
+   - `ADMIN_EMAIL` (optional): sign-in email, defaults to `guehipoegnansergej@gmail.com`.
    - `ADMIN_SESSION_SECRET`: 32+ random characters (`openssl rand -base64 48`).
 3. Redeploy.
+
+## Sign in
+- Go to `/admin`, enter **Email** + **Password**.
+- First sign-in: email `guehipoegnansergej@gmail.com` (or `ADMIN_EMAIL` if set), password = `ADMIN_PASSWORD`.
+- Change the email and/or password anytime in **Account (sign-in)** (current password required).
+  The new details are stored encrypted in Vercel Blob and replace the env values; other open sessions are signed out.
+- Forgot the password? Vercel → Storage → Blob → delete the file under `auth/` → sign in again with the env values.
 
 ## What can be edited
 Hero (texts + slides video/image, separate phone version, framing, B&W), About, George's profile,
@@ -20,7 +28,7 @@ logo, SEO, visibility of each section. The last 25 saves are kept in **History**
 - Only a vertical video? Choose **Framing → Whole video over blurred background**.
 
 ## Security
-- Password login → HttpOnly, Secure, SameSite=Strict cookie (`__Host-`), 8 h session, signed (HS256).
+- Email + password login (scrypt hash, constant-time checks, same error for wrong email or password) → HttpOnly, Secure, SameSite=Strict cookie (`__Host-`), 8 h session, signed (HS256).
 - Login limited to 5 attempts / 15 min per IP; contact form limited to 5 / 10 min.
 - Every admin write requires same origin + custom header (CSRF) and is validated with Zod
   (lengths capped, `<`/`>` refused in single-line fields, only `https://` or `/…` URLs).

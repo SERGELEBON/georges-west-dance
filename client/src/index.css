@@ -263,11 +263,14 @@ footer { background:var(--ink); }
 .adm-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)) auto; gap:12px; align-items:end; }
 .adm-field { display:grid; gap:6px; min-width:0; }
 .adm-label { font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
-.adm-field input[type=text], .adm-field input[type=password], .adm-field input[type=number], .adm-field textarea, .adm-field select, .adm-media input[type=text] { width:100%; padding:10px 12px; border:1px solid var(--line); background:#fff; color:var(--ink); font:inherit; font-size:14px; border-radius:0; }
+.adm-field input[type=text], .adm-field input[type=email], .adm-field input[type=password], .adm-field input[type=number], .adm-field textarea, .adm-field select, .adm-media input[type=text] { width:100%; padding:10px 12px; border:1px solid var(--line); background:#fff; color:var(--ink); font:inherit; font-size:14px; border-radius:0; }
 .adm-field textarea { resize:vertical; line-height:1.55; }
 .adm-field input[type=checkbox], .adm-switch input { width:18px; height:18px; accent-color:var(--bronze); }
 .adm-field small, .adm-muted { color:var(--muted); font-size:12px; }
 .adm-error { color:#9b1b18; font-size:13px; margin:0; }
+.adm-ok { color:#1f6b3a; font-size:13px; margin:0; display:flex; align-items:center; gap:6px; }
+.adm-note { color:var(--muted); font-size:14px; margin:0 0 4px; }
+.adm-panel form { display:grid; gap:14px; max-width:520px; }
 .adm-card { border:1px solid var(--line); padding:16px; display:grid; gap:14px; background:#fffcf7; }
 .adm-card.is-muted { opacity:.7; }
 .adm-card-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; }

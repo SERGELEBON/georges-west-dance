@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DEFAULT_CONTENT, siteContentSchema, type CourseKey, type HeroSlide, type SiteContent, type SiteEvent } from "@shared/siteContent";
 
 type Path = Array<string | number>;
-type Session = { authenticated: boolean; configured: boolean; storage: string };
+type Session = { authenticated: boolean; configured: boolean };
 type Version = { id: string; savedAt: string; size: number };
 
 const api = async <T,>(url: string, init: RequestInit = {}): Promise<T> => {
@@ -119,13 +119,13 @@ export default function Admin() {
     robots.content = "noindex, nofollow";
     document.head.appendChild(robots);
     document.title = "Admin — Georges West Dance";
-    api<Session>("/api/admin/session").then(setSession).catch(() => setSession({ authenticated: false, configured: false, storage: "unknown" }));
+    api<Session>("/api/admin/session").then(setSession).catch(() => setSession({ authenticated: false, configured: false }));
     return () => { robots.remove(); };
   }, []);
 
   if (!session) return <div className="admin-loading">Loading…</div>;
   if (!session.authenticated) return <Login configured={session.configured} onSuccess={() => api<Session>("/api/admin/session").then(setSession)} />;
-  return <Editor storage={session.storage} onLogout={() => setSession({ ...session, authenticated: false })} />;
+  return <Editor onLogout={() => setSession({ ...session, authenticated: false })} />;
 }
 
 function Login({ configured, onSuccess }: { configured: boolean; onSuccess: () => void }) {
@@ -152,7 +152,7 @@ function Login({ configured, onSuccess }: { configured: boolean; onSuccess: () =
       <form onSubmit={submit}>
         <p className="adm-kicker">Georges West Dance</p>
         <h1>Admin</h1>
-        {!configured && <p className="adm-error">Admin is not configured yet: add ADMIN_PASSWORD (12+ characters) and ADMIN_SESSION_SECRET (32+ characters) in Vercel → Settings → Environment Variables, then redeploy.</p>}
+        {!configured && <p className="adm-error">Sign-in is not available yet. Please contact your web developer.</p>}
         <Field label="Email"><input type="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete="username" required maxLength={254} autoFocus /></Field>
         <Field label="Password"><input type="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" required maxLength={200} /></Field>
         {error && <p className="adm-error" role="alert">{error}</p>}
@@ -163,7 +163,7 @@ function Login({ configured, onSuccess }: { configured: boolean; onSuccess: () =
   );
 }
 
-function Editor({ storage, onLogout }: { storage: string; onLogout: () => void }) {
+function Editor({ onLogout }: { onLogout: () => void }) {
   const queryClient = useQueryClient();
   const [saved, setSaved] = useState<SiteContent | null>(null);
   const [draft, setDraft] = useState<SiteContent>(DEFAULT_CONTENT);
@@ -240,7 +240,7 @@ function Editor({ storage, onLogout }: { storage: string; onLogout: () => void }
   return (
     <div className="adm">
       <header className="adm-top">
-        <div><strong>GWD Admin</strong><span className={`adm-pill ${storage === "vercel-blob" ? "ok" : "warn"}`}>{storage === "vercel-blob" ? "Vercel Blob connected" : "Local storage (dev)"}</span></div>
+        <div><strong>GWD Admin</strong></div>
         <div className="adm-top-actions">
           {dirty && <span className="adm-dirty">Unsaved changes</span>}
           <a className="adm-btn adm-btn--ghost" href="/" target="_blank" rel="noopener noreferrer"><ExternalLink size={14} /> View site</a>
@@ -407,7 +407,7 @@ function VersionHistory({ onRestored }: { onRestored: (c: SiteContent) => void }
 /* ---------- Account: sign-in email + password ---------- */
 
 function AccountSettings() {
-  const [current, setCurrent] = useState<{ email: string; source: string } | null>(null);
+  const [current, setCurrent] = useState<{ email: string } | null>(null);
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -415,7 +415,7 @@ function AccountSettings() {
   const [status, setStatus] = useState<{ kind: "idle" | "busy" | "ok" | "error"; message?: string }>({ kind: "idle" });
 
   useEffect(() => {
-    api<{ email: string; source: string }>("/api/admin/account").then(a => { setCurrent(a); setEmail(a.email); }).catch(e => setStatus({ kind: "error", message: e.message }));
+    api<{ email: string }>("/api/admin/account").then(a => { setCurrent(a); setEmail(a.email); }).catch(e => setStatus({ kind: "error", message: e.message }));
   }, []);
 
   const mismatch = newPassword !== "" && confirm !== "" && newPassword !== confirm;
@@ -425,7 +425,7 @@ function AccountSettings() {
     setStatus({ kind: "busy" });
     try {
       const r = await api<{ email: string }>("/api/admin/account", { method: "PUT", body: JSON.stringify({ email, currentPassword, newPassword }) });
-      setCurrent({ email: r.email, source: "dashboard" });
+      setCurrent({ email: r.email });
       setCurrentPassword(""); setNewPassword(""); setConfirm("");
       setStatus({ kind: "ok", message: "Saved. Use these details next time you sign in. Other open sessions were signed out." });
     } catch (err) {
@@ -436,7 +436,7 @@ function AccountSettings() {
   return (
     <form onSubmit={submit} autoComplete="off">
       <h2>Account (sign-in)</h2>
-      <p className="adm-note">Signed in as <strong>{current?.email || "…"}</strong>{current?.source === "env" ? " — initial details from Vercel settings. Saving here replaces them." : "."}</p>
+      <p className="adm-note">Signed in as <strong>{current?.email || "…"}</strong>.</p>
       <Field label="Sign-in email"><input type="email" value={email} onChange={e => setEmail(e.target.value)} required maxLength={254} autoComplete="username" /></Field>
       <Field label="New password" hint="Leave empty to keep the current password. 12+ characters, letters and numbers or symbols."><input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} maxLength={200} minLength={12} autoComplete="new-password" /></Field>
       <Field label="Confirm new password"><input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} maxLength={200} autoComplete="new-password" /></Field>

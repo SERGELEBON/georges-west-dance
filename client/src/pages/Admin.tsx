@@ -1,5 +1,5 @@
 // Admin panel — edit every section of the website (hero slides, texts, George's profile, events, classes...).
-// Auth: password -> HttpOnly SameSite=Strict session cookie (server/adminAuth.ts). All writes are re-validated server-side.
+// Auth: email + password -> HttpOnly SameSite=Strict session cookie (server/adminAuth.ts). All writes are re-validated server-side.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import { ArrowDown, ArrowUp, Check, ExternalLink, History, ImagePlus, LoaderCircle, LogOut, Plus, Save, Trash2, Upload } from "lucide-react";
@@ -106,7 +106,7 @@ function ListControls({ index, length, onMove, onRemove }: { index: number; leng
 
 const TABS = [
   ["hero", "Hero & slides"], ["about", "About"], ["george", "George (profile)"], ["events", "Events"],
-  ["classes", "Classes"], ["portfolio", "Portfolio & booking"], ["contact", "Contact & brand"], ["sections", "Show / hide sections"], ["history", "History"],
+  ["classes", "Classes"], ["portfolio", "Portfolio & booking"], ["contact", "Contact & brand"], ["sections", "Show / hide sections"], ["history", "History"], ["account", "Account (sign-in)"],
 ] as const;
 type Tab = (typeof TABS)[number][0];
 
@@ -129,6 +129,7 @@ export default function Admin() {
 }
 
 function Login({ configured, onSuccess }: { configured: boolean; onSuccess: () => void }) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -137,7 +138,7 @@ function Login({ configured, onSuccess }: { configured: boolean; onSuccess: () =
     setBusy(true);
     setError("");
     try {
-      await api("/api/admin/login", { method: "POST", body: JSON.stringify({ password }) });
+      await api("/api/admin/login", { method: "POST", body: JSON.stringify({ email, password }) });
       setPassword("");
       onSuccess();
     } catch (err) {
@@ -152,9 +153,10 @@ function Login({ configured, onSuccess }: { configured: boolean; onSuccess: () =
         <p className="adm-kicker">Georges West Dance</p>
         <h1>Admin</h1>
         {!configured && <p className="adm-error">Admin is not configured yet: add ADMIN_PASSWORD (12+ characters) and ADMIN_SESSION_SECRET (32+ characters) in Vercel → Settings → Environment Variables, then redeploy.</p>}
-        <Field label="Password"><input type="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" required maxLength={200} autoFocus /></Field>
+        <Field label="Email"><input type="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete="username" required maxLength={254} autoFocus /></Field>
+        <Field label="Password"><input type="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" required maxLength={200} /></Field>
         {error && <p className="adm-error" role="alert">{error}</p>}
-        <button className="adm-btn adm-btn--primary" disabled={busy || !password}>{busy ? <LoaderCircle className="adm-spin" size={15} /> : null} Sign in</button>
+        <button className="adm-btn adm-btn--primary" disabled={busy || !password || !email}>{busy ? <LoaderCircle className="adm-spin" size={15} /> : null} Sign in</button>
         <a className="adm-back" href="/">← Back to the website</a>
       </form>
     </div>
@@ -374,6 +376,7 @@ function Editor({ storage, onLogout }: { storage: string; onLogout: () => void }
             <div className="adm-toggles">{(Object.keys(draft.sections) as Array<keyof SiteContent["sections"]>).map(key => <label className="adm-switch" key={key}><input type="checkbox" checked={draft.sections[key]} onChange={e => set(["sections", key], e.target.checked)} /> {key}</label>)}</div>
           </>}
 
+          {tab === "account" && <AccountSettings />}
           {tab === "history" && <VersionHistory onRestored={c => { setSaved(c); setDraft(c); queryClient.setQueryData(["site-content"], c); }} />}
         </main>
       </div>
@@ -398,4 +401,51 @@ function VersionHistory({ onRestored }: { onRestored: (c: SiteContent) => void }
       <ul className="adm-versions">{versions.map((v, i) => <li key={v.id}><span>{new Date(v.savedAt).toLocaleString()}</span>{i === 0 ? <em>Live</em> : <button className="adm-btn adm-btn--ghost" onClick={() => restore(v.id)}>Restore</button>}</li>)}</ul>
     )}
   </>;
+}
+
+/* ---------- Account: sign-in email + password ---------- */
+
+function AccountSettings() {
+  const [current, setCurrent] = useState<{ email: string; source: string } | null>(null);
+  const [email, setEmail] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [status, setStatus] = useState<{ kind: "idle" | "busy" | "ok" | "error"; message?: string }>({ kind: "idle" });
+
+  useEffect(() => {
+    api<{ email: string; source: string }>("/api/admin/account").then(a => { setCurrent(a); setEmail(a.email); }).catch(e => setStatus({ kind: "error", message: e.message }));
+  }, []);
+
+  const mismatch = newPassword !== "" && confirm !== "" && newPassword !== confirm;
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword && newPassword !== confirm) { setStatus({ kind: "error", message: "The two new passwords do not match." }); return; }
+    setStatus({ kind: "busy" });
+    try {
+      const r = await api<{ email: string }>("/api/admin/account", { method: "PUT", body: JSON.stringify({ email, currentPassword, newPassword }) });
+      setCurrent({ email: r.email, source: "dashboard" });
+      setCurrentPassword(""); setNewPassword(""); setConfirm("");
+      setStatus({ kind: "ok", message: "Saved. Use these details next time you sign in. Other open sessions were signed out." });
+    } catch (err) {
+      setStatus({ kind: "error", message: err instanceof Error ? err.message : "Could not save" });
+    }
+  };
+
+  return (
+    <form onSubmit={submit} autoComplete="off">
+      <h2>Account (sign-in)</h2>
+      <p className="adm-note">Signed in as <strong>{current?.email || "…"}</strong>{current?.source === "env" ? " — initial details from Vercel settings. Saving here replaces them." : "."}</p>
+      <Field label="Sign-in email"><input type="email" value={email} onChange={e => setEmail(e.target.value)} required maxLength={254} autoComplete="username" /></Field>
+      <Field label="New password" hint="Leave empty to keep the current password. 12+ characters, letters and numbers or symbols."><input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} maxLength={200} minLength={12} autoComplete="new-password" /></Field>
+      <Field label="Confirm new password"><input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} maxLength={200} autoComplete="new-password" /></Field>
+      {mismatch && <p className="adm-error">The two new passwords do not match.</p>}
+      <Field label="Current password (required to save)"><input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} required maxLength={200} autoComplete="current-password" /></Field>
+      {status.kind === "error" && <p className="adm-error" role="alert">{status.message}</p>}
+      {status.kind === "ok" && <p className="adm-ok" role="status"><Check size={14} /> {status.message}</p>}
+      <button className="adm-btn adm-btn--primary" disabled={status.kind === "busy" || !currentPassword || !email || mismatch}>
+        {status.kind === "busy" ? <LoaderCircle className="adm-spin" size={15} /> : <Save size={15} />} Save sign-in details
+      </button>
+    </form>
+  );
 }

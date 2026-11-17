@@ -42,7 +42,7 @@ export function registerContentRoutes(app: Express) {
       if (!isSameOriginAdminRequest(req)) { res.status(403).json({ error: "Forbidden" }); return; }
       if (!(await isAdmin(req))) { res.status(401).json({ error: "Unauthorized" }); return; }
     }
-    if (!hasBlobStore()) { res.status(503).json({ error: "Uploads need a Vercel Blob store connected to the project." }); return; }
+    if (!hasBlobStore()) { console.error("[admin] upload refused: BLOB_READ_WRITE_TOKEN missing"); res.status(503).json({ error: "Uploads are not available right now. Please contact your web developer." }); return; }
     try {
       const result = await handleUpload({
         body,
@@ -72,12 +72,12 @@ export function registerContentRoutes(app: Express) {
   admin.use((_req, res, next) => { noStore(res); next(); });
 
   admin.get("/session", async (req, res) => {
-    res.json({ authenticated: await isAdmin(req), configured: await adminConfigured(), storage: hasBlobStore() ? "vercel-blob" : "local-file" });
+    res.json({ authenticated: await isAdmin(req), configured: await adminConfigured() });
   });
 
   admin.post("/login", async (req, res) => {
     if (!(await adminConfigured())) {
-      res.status(503).json({ error: "Admin is not configured. Set ADMIN_PASSWORD and ADMIN_SESSION_SECRET in Vercel." });
+      res.status(503).json({ error: "Sign-in is not available yet. Please contact your web developer." });
       return;
     }
     const key = `login:${clientIp(req)}`;
@@ -102,7 +102,7 @@ export function registerContentRoutes(app: Express) {
   // ---------- Account (sign-in email + password) ----------
   admin.get("/account", requireAdmin, async (_req, res) => {
     const creds = await getActiveCredentials();
-    res.json({ email: creds?.email ?? "", source: creds?.source ?? "env", storage: hasBlobStore() ? "vercel-blob" : "local-file" });
+    res.json({ email: creds?.email ?? "" });
   });
 
   admin.put("/account", requireAdmin, async (req, res) => {
@@ -130,7 +130,7 @@ export function registerContentRoutes(app: Express) {
     }
     accountLimiter.reset(key);
     if (creds.source === "env" && !hasBlobStore() && process.env.VERCEL) {
-      res.status(503).json({ error: "Connect a Vercel Blob store to the project first (Storage → Blob)." });
+      console.error("[admin] account save refused: BLOB_READ_WRITE_TOKEN missing"); res.status(503).json({ error: "Saving is not available right now. Please contact your web developer." });
       return;
     }
     try {
@@ -167,7 +167,7 @@ export function registerContentRoutes(app: Express) {
       res.json({ ok: true, version });
     } catch (error) {
       console.error("[admin] save failed", error);
-      res.status(500).json({ error: "Could not save. Check that a Vercel Blob store is connected to the project." });
+      res.status(500).json({ error: "Could not save. Please try again in a moment; if it keeps failing, contact your web developer." });
     }
   });
 

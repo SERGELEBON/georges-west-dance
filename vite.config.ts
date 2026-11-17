@@ -150,7 +150,12 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+// Manus dev tooling is only useful in the Manus preview. In production builds it
+// injected a ~360 KB inline script, which hurt load time and blocked a strict CSP.
+const isProdBuild = process.argv.includes("build") || process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
+const plugins = isProdBuild
+  ? [react(), tailwindcss()]
+  : [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
   plugins,
@@ -167,6 +172,7 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    sourcemap: false,
   },
   server: {
     host: true,

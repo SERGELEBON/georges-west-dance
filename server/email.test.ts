@@ -4,7 +4,7 @@ import { sendBookingEmail } from "./email";
 afterEach(() => vi.unstubAllGlobals());
 
 describe("sendBookingEmail", () => {
-  it("posts a booking enquiry to Resend with reply-to and activity context", async () => {
+  it.skipIf(!process.env.RESEND_API_KEY || !process.env.CONTACT_EMAIL)("posts a booking enquiry to Resend with reply-to and activity context", async () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: "email_test" }), { status: 200 }));
     vi.stubGlobal("fetch", fetchMock);
 

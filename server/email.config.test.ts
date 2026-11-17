@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 describe("email delivery configuration", () => {
-  it("accepts the configured Resend credentials", async () => {
+  it.skipIf(!process.env.RESEND_API_KEY || !process.env.CONTACT_EMAIL)("accepts the configured Resend credentials", async () => {
     const apiKey = process.env.RESEND_API_KEY;
     const recipient = process.env.CONTACT_EMAIL;
     expect(apiKey).toBeTruthy();

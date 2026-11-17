@@ -1,21 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { DEFAULT_CONTENT } from "../shared/siteContent";
 
-const homeSource = readFileSync(resolve(process.cwd(), "client/src/pages/Home.tsx"), "utf8");
-const detailSource = readFileSync(resolve(process.cwd(), "client/src/pages/ClassDetail.tsx"), "utf8");
-const indexSource = readFileSync(resolve(process.cwd(), "client/index.html"), "utf8");
-
-const sourceFiles = [homeSource, detailSource, indexSource];
-
-describe("Vercel public asset contract", () => {
-  it("uses absolute CDN URLs for all frontend media references", () => {
-    for (const source of sourceFiles) {
-      expect(source).not.toContain("/manus-storage/");
+describe("public asset contract", () => {
+  it("never references the Manus storage proxy from the frontend", () => {
+    for (const file of ["client/src/pages/Home.tsx", "client/src/pages/ClassDetail.tsx", "client/index.html", "shared/siteContent.ts"]) {
+      expect(readFileSync(resolve(process.cwd(), file), "utf8")).not.toContain("/manus-storage/");
     }
+  });
 
-    expect(homeSource).toContain("https://files.manuscdn.com/");
-    expect(detailSource).toContain("https://files.manuscdn.com/");
-    expect(indexSource).toContain("https://files.manuscdn.com/");
+  it("ships every local hero media file referenced by the default content", () => {
+    const local = DEFAULT_CONTENT.hero.slides.flatMap(s => [s.src, s.mobileSrc, s.poster]).filter(u => u.startsWith("/media/"));
+    expect(local.length).toBeGreaterThan(0);
+    for (const url of local) expect(existsSync(resolve(process.cwd(), "client/public", url.slice(1)))).toBe(true);
   });
 });

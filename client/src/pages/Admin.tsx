@@ -311,6 +311,7 @@ function Editor({ storage, onLogout }: { storage: string; onLogout: () => void }
             <h2>Events</h2>
             <div className="adm-grid">{txt("Eyebrow", ["events", "eyebrow"])}{txt("Title — line 1", ["events", "titleLine1"])}{txt("Title — line 2", ["events", "titleLine2"])}</div>
             {txt("Intro", ["events", "intro"], { area: true, rows: 2 })}
+            <Field label="Slideshow — seconds per event" hint="With 2+ published events they play as slides (one per event). 0 = no auto-scroll. Use the arrows on each card to set the order."><input type="number" min={0} max={30} step={1} value={draft.events.autoplaySeconds} onChange={e => set(["events", "autoplaySeconds"], Math.max(0, Math.min(30, Math.round(Number(e.target.value) || 0))))} /></Field>
             {draft.events.items.map((event, i) => (
               <div className={`adm-card ${event.published ? "" : "is-muted"}`} key={event.id}>
                 <div className="adm-card-head"><strong>{event.titleLine1 || "Event"} {event.published ? "" : "(hidden)"}</strong><label className="adm-switch"><input type="checkbox" checked={event.published} onChange={e => set(["events", "items", i, "published"], e.target.checked)} /> Published</label><ListControls index={i} length={draft.events.items.length} onMove={move(["events", "items"])} onRemove={() => remove(["events", "items"], i)} /></div>

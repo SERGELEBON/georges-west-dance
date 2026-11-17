@@ -21,15 +21,27 @@ describe("Vercel configuration", () => {
   });
 
   it("does not declare an invalid community runtime", () => {
-    const runtime = config.functions?.["api/[...path].ts"]?.runtime;
-    expect(runtime).toBeUndefined();
+    expect(config.functions).toBeUndefined();
   });
 
   it("routes storage assets to the serverless proxy before the SPA fallback", () => {
     const storageRewrite = config.rewrites.find(
       rewrite => rewrite.source.startsWith("/manus-storage/"),
     );
-    expect(storageRewrite?.destination).toBe("/api/manus-storage/:path*");
+    expect(storageRewrite?.destination).toBe("/api");
+  });
+
+  it("sends every nested /api route to the single bundled function", () => {
+    const apiRewrite = config.rewrites.find(rewrite => rewrite.source === "/api/:path*");
+    expect(apiRewrite?.destination).toBe("/api");
+    expect(config.buildCommand).toContain("pnpm build");
+  });
+
+  it("bundles the Express app for the function (no extension-less ESM imports at runtime)", () => {
+    const pkg = JSON.parse(readFileSync(resolve(process.cwd(), "package.json"), "utf8"));
+    expect(pkg.scripts.build).toContain("--outfile=dist/api/app.mjs");
+    const entry = readFileSync(resolve(process.cwd(), "api/index.js"), "utf8");
+    expect(entry).toContain('from "../dist/api/app.mjs"');
   });
 
   it("excludes API and storage paths from the SPA fallback", () => {
